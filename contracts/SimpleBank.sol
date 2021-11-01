@@ -43,6 +43,14 @@ contract SimpleBank {
         _;
         locked = false;
     }
+
+    modifier enrolledOnly(address requester) {
+        require(
+            enrolled[requester],
+            "address must first enroll to use this method"
+        );
+        _;
+    }
     /* Functions
      */
 
