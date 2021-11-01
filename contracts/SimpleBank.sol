@@ -9,6 +9,7 @@ pragma solidity ^0.8.0;
 contract SimpleBank {
     /* State variables
      */
+    bool internal locked;
 
     // Fill in the visibility keyword.
     // Hint: We want to protect our users balance from other contracts
@@ -36,6 +37,12 @@ contract SimpleBank {
     // Hint: it should take 3 arguments: an accountAddress, withdrawAmount and a newBalance
     event LogWithdrawal();
 
+    modifier noReentrant() {
+        require(!locked, "No re-entrancy");
+        locked = true;
+        _;
+        locked = false;
+    }
     /* Functions
      */
 
